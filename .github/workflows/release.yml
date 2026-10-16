@@ -1,0 +1,54 @@
+# Builds tailgunner-stack.zip and attaches it to a GitHub release.
+#
+# Flow: bump the Version header and TG_STACK_VERSION in tailgunner-stack.php,
+# test on Pro Starter, push to main, then publish a release whose tag matches
+# (v1.2.0 or 1.2.0). This workflow zips the plugin and uploads
+# tailgunner-stack.zip to the release.
+#
+# Sites only accept that zip (REQUIRE_RELEASE_ASSETS): if this workflow fails,
+# no update is offered. Every release auto-installs on every site, so mark a
+# release as a pre-release to hold it back; the update checker ignores
+# pre-releases until they are switched to a full release.
+
+name: Build release asset
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Tag, Version header and TG_STACK_VERSION must agree. If they don't,
+      # WordPress installs the update then offers it again, forever.
+      - name: Check tag matches plugin version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          HEADER=$(grep -m1 -E '^\s*\*\s*Version:' tailgunner-stack.php | sed -E 's/.*Version:[[:space:]]*//')
+          CONST=$(grep -m1 "define( 'TG_STACK_VERSION'" tailgunner-stack.php | sed -E "s/.*'TG_STACK_VERSION', '([^']+)'.*/\1/")
+          echo "tag=$TAG header=$HEADER const=$CONST"
+          if [ "$TAG" != "$HEADER" ] || [ "$TAG" != "$CONST" ]; then
+            echo "::error::Release tag ($GITHUB_REF_NAME) does not match Version header ($HEADER) / TG_STACK_VERSION ($CONST). Fix the version, delete the release and tag, and release again."
+            exit 1
+          fi
+
+      - name: Check PHP syntax
+        run: find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Stage and zip plugin
+        run: |
+          mkdir -p stage/tailgunner-stack
+          cp -R tailgunner-stack.php README.md includes css vendor stage/tailgunner-stack/
+          cd stage && zip -rq tailgunner-stack.zip tailgunner-stack
+          unzip -l tailgunner-stack.zip | tail -3
+
+      - name: Attach zip to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" stage/tailgunner-stack.zip --clobber

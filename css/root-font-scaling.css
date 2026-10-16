@@ -1,0 +1,18 @@
+/* Root font size: scaling
+// ========================================================================== */
+
+html {
+  font-size: {{dc:theme:x_root_font_size_scaling_min}}{{dc:theme:x_root_font_size_scaling_unit}};
+}
+
+@media (min-width: {{dc:theme:x_root_font_size_scaling_lower_limit}}{{dc:theme:x_root_font_size_scaling_unit}}) {
+  html {
+    font-size: calc({{dc:theme:x_root_font_size_scaling_min}}{{dc:theme:x_root_font_size_scaling_unit}} + ({{dc:theme:x_root_font_size_scaling_max}} - {{dc:theme:x_root_font_size_scaling_min}}) * ((100vw - {{dc:theme:x_root_font_size_scaling_lower_limit}}{{dc:theme:x_root_font_size_scaling_unit}}) / ({{dc:theme:x_root_font_size_scaling_upper_limit}} - {{dc:theme:x_root_font_size_scaling_lower_limit}})));
+  }
+}
+
+@media (min-width: {{dc:theme:x_root_font_size_scaling_upper_limit}}{{dc:theme:x_root_font_size_scaling_unit}}) {
+  html {
+    font-size: {{dc:theme:x_root_font_size_scaling_max}}{{dc:theme:x_root_font_size_scaling_unit}};
+  }
+}

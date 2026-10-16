@@ -1,0 +1,62 @@
+/* Contact Form 7 (only output while CF7 is active)
+// ========================================================================== */
+
+form.wpcf7-form input[type="submit"] {
+  border-radius: {{dc:theme:tg_cf7_button_radius}};
+  font-size: 18px;
+  background-color: {{dc:theme:tg_cf7_button_bg}};
+  color: {{dc:theme:tg_cf7_button_text}};
+  padding: 0.6em 1.2em;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+form.wpcf7-form input:not([type="submit"]),
+form.wpcf7-form textarea,
+form.wpcf7-form select {
+  border-style: solid;
+  border-width: 1px;
+  border-color: {{dc:theme:tg_cf7_input_border}};
+  border-radius: {{dc:theme:tg_cf7_input_radius}};
+  font-size: 1.1rem;
+  line-height: 1.2;
+  padding: 10px;
+  margin: 10px 0 10px;
+}
+
+form.wpcf7-form .wpcf7-list-item-label {
+  font-size: 1.1rem;
+}
+
+form.wpcf7-form p,
+form.wpcf7-form p * {
+  line-height: 1.2;
+}
+
+form.wpcf7-form input[type="checkbox"],
+form.wpcf7-form input[type="radio"] {
+  margin: 0 10px 0 0;
+}
+
+form.wpcf7-form .wpcf7-response-output {
+  padding: 1rem;
+  border-radius: {{dc:theme:tg_cf7_button_radius}};
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.wpcf7-not-valid-tip {
+  font-size: 1rem;
+  padding: 5px;
+}
+
+form.wpcf7-form.invalid .wpcf7-response-output,
+.wpcf7-not-valid-tip {
+  background-color: #ffdfdf;
+  color: #c60303;
+}
+
+form.wpcf7-form.sent .wpcf7-response-output {
+  background-color: #ddffde;
+  color: #5f8632;
+}

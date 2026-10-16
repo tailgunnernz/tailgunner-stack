@@ -1,0 +1,29 @@
+/* Layout
+// ========================================================================== */
+
+body {
+  background: {{dc:theme:x_design_bg_color destination="color"}};
+}
+
+body,
+html {
+  overflow-x: clip;
+}
+
+.x-container.width               { width: {{dc:theme:x_layout_site_width unit="%"}}; }
+.x-container.max                 { max-width: {{dc:theme:x_layout_site_max_width unit="px"}}; }
+.x-bar-content.x-container.width { flex-basis: {{dc:theme:x_layout_site_width unit="%"}}; }
+
+.x-container,
+.x-container.max,
+.x-container.width {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.x-main.full {
+  float: none;
+  clear: both;
+  display: block;
+  width: auto;
+}
