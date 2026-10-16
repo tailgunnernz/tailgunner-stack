@@ -9,6 +9,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// {{dc:tg:admin_email}}: the site's admin email. The contact form component's
+// recipient defaults to it, so each site's form follows its own settings.
+add_filter( 'cs_dynamic_content_tg', function ( $result, $field ) {
+	return 'admin_email' === $field ? get_option( 'admin_email' ) : $result;
+}, 10, 2 );
+
 /**
  * Keys from Simple Cloudflare Turnstile (its settings, or the
  * CF_TURNSTILE_SITE_KEY / CF_TURNSTILE_SECRET_KEY constants). Null when the
@@ -40,20 +46,40 @@ add_filter( 'pre_option_cs_forms_turnstile_secret_key', function ( $pre ) {
 	return $keys ? $keys['secret'] : $pre;
 } );
 
+/**
+ * Whether a Turnstile element has keys to work with: its own, or the global
+ * ones above.
+ */
+function tg_stack_turnstile_has_keys( $element ) {
+	$site   = ( $element['site_key'] ?? '' ) ?: get_option( 'cs_forms_turnstile_site_key' );
+	$secret = ( $element['site_secret'] ?? '' ) ?: get_option( 'cs_forms_turnstile_secret_key' );
+
+	return ! empty( $site ) && ! empty( $secret );
+}
+
 // A Turnstile element always checks for a token, so with no keys anywhere every
-// submission would fail. Switch Cornerstone's Turnstile off instead and let the
-// honeypot carry on. Returns 0 rather than false: false means "no override" to
-// pre_option filters.
-add_filter( 'pre_option_cs_forms_turnstile_enabled', function ( $pre ) {
-	if ( tg_stack_turnstile_plugin_keys() ) {
-		return $pre;
+// submission would fail. Without keys the element renders nothing and skips
+// its check, and the honeypot carries on. It stays registered (rather than
+// switching Cornerstone's Turnstile setting off) so the builder never sees the
+// component's Turnstile as a missing element.
+add_filter( 'cs_register_element_cornerstone-form-cloudflare-turnstile', function ( $element ) {
+	$render   = $element['render'] ?? null;
+	$validate = $element['options']['form_validate'] ?? null;
+
+	if ( $render ) {
+		$element['render'] = function ( $data ) use ( $render ) {
+			$preview = function_exists( 'is_cornerstone_preview' ) && is_cornerstone_preview();
+			return ( $preview || tg_stack_turnstile_has_keys( $data ) ) ? call_user_func( $render, $data ) : '';
+		};
 	}
 
-	if ( get_option( 'cs_forms_turnstile_site_key' ) && get_option( 'cs_forms_turnstile_secret_key' ) ) {
-		return $pre;
+	if ( $validate ) {
+		$element['options']['form_validate'] = function ( $data, $element ) use ( $validate ) {
+			return tg_stack_turnstile_has_keys( $element ) ? call_user_func( $validate, $data, $element ) : null;
+		};
 	}
 
-	return 0;
+	return $element;
 } );
 
 /**

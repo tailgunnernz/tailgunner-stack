@@ -1,0 +1,249 @@
+{
+  "_type": "layout-div",
+  "_label": "Contact form",
+  "layout_div_width": "100%",
+  "_p_json": "{\"recipient\": {\"type\": \"text\", \"label\": \"Send to (email)\", \"initial\": \"{{dc:tg:admin_email}}\"}, \"subject\": {\"type\": \"text\", \"label\": \"Email subject\", \"initial\": \"New enquiry from {{dc:global:site_title}}\"}, \"button_label\": {\"type\": \"text\", \"label\": \"Button label\", \"initial\": \"Send message\"}, \"success\": {\"type\": \"textarea\", \"label\": \"Success message\", \"initial\": \"Thanks, we've got your message and will be in touch soon.\"}}",
+  "_modules": [
+    {
+      "_type": "cornerstone-form",
+      "_label": "Form",
+      "submission_enabled": true,
+      "submission_title": "Enquiry from {{dc:form:data key=\"full_name\"}}",
+      "submission_content": "{{dc:form:data_table}}<p style=\"color:#777777;font-size:13px;margin-top:16px;\">Sent {{dc:global:date format=\"j F Y\"}} {{dc:global:time format=\"g:ia\"}} from <a href=\"{{dc:post:permalink}}\">{{dc:post:title}}</a></p>",
+      "error_text_text_color": "#c60303",
+      "layout_div_flex_gap": "1.25em",
+      "_modules": [
+        {
+          "_type": "cornerstone-form-action-group",
+          "_label": "Actions",
+          "_modules": [
+            {
+              "_type": "cornerstone-actions-email-action",
+              "_label": "Email",
+              "to": [
+                {
+                  "email": "{{dc:p:recipient}}",
+                  "name": ""
+                }
+              ],
+              "subject": "{{dc:p:subject}}",
+              "reply_to": [
+                {
+                  "email": "{{dc:form:data key=\"email\"}}",
+                  "name": "{{dc:form:data key=\"full_name\"}}"
+                }
+              ],
+              "message": "{{dc:form:data_table}}<p style=\"color:#777777;font-size:13px;margin-top:16px;\">Sent {{dc:global:date format=\"j F Y\"}} {{dc:global:time format=\"g:ia\"}} from <a href=\"{{dc:post:permalink}}\">{{dc:post:title}}</a></p>"
+            }
+          ]
+        },
+        {
+          "_type": "layout-div",
+          "_label": "Success message",
+          "layout_div_bg_color": "#ddffde",
+          "layout_div_padding": "1rem 1rem 1rem 1rem",
+          "layout_div_border_radius": "3px",
+          "show_condition": [
+            {
+              "group": true,
+              "condition": "form:did_submit_without_errors",
+              "toggle": true,
+              "value": ""
+            }
+          ],
+          "_modules": [
+            {
+              "_type": "text",
+              "_label": "Success text",
+              "text_content": "{{dc:p:success}}",
+              "text_text_color": "#5f8632"
+            }
+          ]
+        },
+        {
+          "_type": "layout-div",
+          "_label": "Fields",
+          "layout_div_flexbox": true,
+          "layout_div_flex_direction": "column",
+          "layout_div_flex_wrap": false,
+          "layout_div_flex_gap": "1.25em",
+          "layout_div_flex_align": "stretch",
+          "show_condition": [
+            {
+              "group": true,
+              "condition": "form:did_submit_without_errors",
+              "toggle": false,
+              "value": ""
+            }
+          ],
+          "_modules": [
+            {
+              "_type": "cornerstone-form-input",
+              "_label": "Name",
+              "name": "full_name",
+              "label_enabled": true,
+              "label_html": "Name",
+              "design_background": "global-color:9BEIDp7Chi6UvJ105M",
+              "design_border_width": "1px",
+              "design_border_style": "solid",
+              "design_border_color": "#dddddd",
+              "design_border_radius": "0px",
+              "design_font_size": "1.1rem",
+              "design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "active_design_border_width": "1px",
+              "active_design_border_color": "global-color:hD7eHJdz5b9ddZgsyo",
+              "active_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "active_design_box_shadow_color": "transparent",
+              "error_design_background": "#ffdfdf",
+              "error_design_border_color": "#c60303",
+              "error_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "error_design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_required_color": "#c60303",
+              "type": "text",
+              "autocomplete": "name",
+              "required": true,
+              "design_padding": "0px 10px 0px 10px"
+            },
+            {
+              "_type": "cornerstone-form-input",
+              "_label": "Email",
+              "name": "email",
+              "label_enabled": true,
+              "label_html": "Email",
+              "design_background": "global-color:9BEIDp7Chi6UvJ105M",
+              "design_border_width": "1px",
+              "design_border_style": "solid",
+              "design_border_color": "#dddddd",
+              "design_border_radius": "0px",
+              "design_font_size": "1.1rem",
+              "design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "active_design_border_width": "1px",
+              "active_design_border_color": "global-color:hD7eHJdz5b9ddZgsyo",
+              "active_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "active_design_box_shadow_color": "transparent",
+              "error_design_background": "#ffdfdf",
+              "error_design_border_color": "#c60303",
+              "error_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "error_design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_required_color": "#c60303",
+              "type": "email",
+              "autocomplete": "email",
+              "required": true,
+              "validations": [
+                {
+                  "validation_type": "email"
+                }
+              ],
+              "design_padding": "0px 10px 0px 10px"
+            },
+            {
+              "_type": "cornerstone-form-input",
+              "_label": "Phone",
+              "name": "phone",
+              "label_enabled": true,
+              "label_html": "Phone",
+              "design_background": "global-color:9BEIDp7Chi6UvJ105M",
+              "design_border_width": "1px",
+              "design_border_style": "solid",
+              "design_border_color": "#dddddd",
+              "design_border_radius": "0px",
+              "design_font_size": "1.1rem",
+              "design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "active_design_border_width": "1px",
+              "active_design_border_color": "global-color:hD7eHJdz5b9ddZgsyo",
+              "active_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "active_design_box_shadow_color": "transparent",
+              "error_design_background": "#ffdfdf",
+              "error_design_border_color": "#c60303",
+              "error_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "error_design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_required_color": "#c60303",
+              "type": "tel",
+              "autocomplete": "tel",
+              "required": false,
+              "design_padding": "0px 10px 0px 10px"
+            },
+            {
+              "_type": "cornerstone-form-textarea",
+              "_label": "Message",
+              "name": "message",
+              "label_enabled": true,
+              "label_html": "Message",
+              "design_background": "global-color:9BEIDp7Chi6UvJ105M",
+              "design_border_width": "1px",
+              "design_border_style": "solid",
+              "design_border_color": "#dddddd",
+              "design_border_radius": "0px",
+              "design_font_size": "1.1rem",
+              "design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "active_design_border_width": "1px",
+              "active_design_border_color": "global-color:hD7eHJdz5b9ddZgsyo",
+              "active_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "active_design_box_shadow_color": "transparent",
+              "error_design_background": "#ffdfdf",
+              "error_design_border_color": "#c60303",
+              "error_design_box_shadow_dimensions": "0px 0px 0px 0px",
+              "error_design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
+              "label_required_color": "#c60303",
+              "required": true,
+              "design_padding": "10px",
+              "design_height": "10em"
+            },
+            {
+              "_type": "cornerstone-form-input",
+              "_label": "Honeypot",
+              "type": "text",
+              "name": "cs_honeypot",
+              "class": "cs-form-input-hidden",
+              "label_enabled": false,
+              "autocomplete": "off",
+              "validations": [
+                {
+                  "validation_type": "value",
+                  "expected_value": ""
+                }
+              ]
+            },
+            {
+              "_type": "cornerstone-form-cloudflare-turnstile",
+              "_label": "Turnstile",
+              "theme": "user",
+              "size": "normal",
+              "execution": "render"
+            },
+            {
+              "_type": "layout-div",
+              "_label": "Button row",
+              "layout_div_flexbox": true,
+              "layout_div_flex_direction": "row",
+              "layout_div_flex_justify": "flex-start",
+              "_modules": [
+                {
+                  "_type": "button",
+                  "_label": "Submit",
+                  "anchor_tag": "button",
+                  "anchor_button_type": "submit",
+                  "anchor_text_primary_content": "{{dc:p:button_label}}",
+                  "anchor_bg_color": "global-color:hD7eHJdz5b9ddZgsyo",
+                  "anchor_bg_color_alt": "global-color:2KvewVzrM5GN5h2THJ",
+                  "anchor_primary_text_color": "global-color:9BEIDp7Chi6UvJ105M",
+                  "anchor_primary_text_color_alt": "global-color:9BEIDp7Chi6UvJ105M",
+                  "anchor_primary_font_size": "1.125rem",
+                  "anchor_primary_font_weight": "fw-bold",
+                  "anchor_box_shadow_dimensions": "0em 0em 0em 0em",
+                  "anchor_border_radius": "3px",
+                  "anchor_padding": "0.6em 1.2em 0.6em 1.2em",
+                  "anchor_text_margin": "0px"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
