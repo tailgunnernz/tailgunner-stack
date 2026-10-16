@@ -10,6 +10,15 @@ add_filter( 'cs_theme_option_breakpoint_keys', function ( $keys ) {
 	return array_merge( $keys, tg_stack_breakpoint_keys() );
 } );
 
+// Blank adds Social (which holds Open Graph) and Portfolio. Tailgunner sites
+// don't use them (Rank Math handles Open Graph), so they're hidden while this
+// stack is active. Their saved values are left as they are.
+foreach ( [ 'cs_theme_options_social_group', 'cs_theme_options_portfolio_group' ] as $tg_stack_hidden_group ) {
+	add_filter( $tg_stack_hidden_group, function ( $group ) {
+		return TG_STACK_ID === get_option( 'x_stack' ) ? null : $group;
+	}, 20 );
+}
+
 // Pro registers Blank and Starter on this hook at priority 0, so Blank exists
 // by the time we extend it.
 add_action( 'cs_theme_options_before_init', function () {

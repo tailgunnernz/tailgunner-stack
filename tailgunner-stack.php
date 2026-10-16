@@ -3,7 +3,7 @@
  * Plugin Name:       Tailgunner Stack
  * Plugin URI:        https://github.com/tailgunnernz/tailgunner-stack
  * Description:       Tailgunner's default stack for the Pro theme: lean layout and typography settings, CF7 and Cornerstone Forms helpers, and the usual front-end tweaks.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Tailgunner
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TG_STACK_VERSION', '1.0.0' );
+define( 'TG_STACK_VERSION', '1.0.1' );
 define( 'TG_STACK_FILE', __FILE__ );
 define( 'TG_STACK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TG_STACK_ID', 'tailgunner' );

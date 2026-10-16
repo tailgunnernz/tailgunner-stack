@@ -102,8 +102,13 @@
               "label_required_color": "#c60303",
               "type": "text",
               "autocomplete": "name",
-              "required": true,
-              "design_padding": "0px 10px 0px 10px"
+              "design_padding": "0px 10px 0px 10px",
+              "validations": [
+                {
+                  "validation_type": "required",
+                  "error_message": "Please enter your name"
+                }
+              ]
             },
             {
               "_type": "cornerstone-form-input",
@@ -130,10 +135,14 @@
               "label_required_color": "#c60303",
               "type": "email",
               "autocomplete": "email",
-              "required": true,
               "validations": [
                 {
-                  "validation_type": "email"
+                  "validation_type": "required",
+                  "error_message": "Please enter your email address"
+                },
+                {
+                  "validation_type": "email",
+                  "error_message": "Please enter a valid email address"
                 }
               ],
               "design_padding": "0px 10px 0px 10px"
@@ -189,9 +198,14 @@
               "error_design_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
               "label_text_color": "global-color:lz2BJrYUGs0qjdN1RK",
               "label_required_color": "#c60303",
-              "required": true,
               "design_padding": "10px",
-              "design_height": "10em"
+              "design_height": "10em",
+              "validations": [
+                {
+                  "validation_type": "required",
+                  "error_message": "Please enter a message"
+                }
+              ]
             },
             {
               "_type": "cornerstone-form-input",

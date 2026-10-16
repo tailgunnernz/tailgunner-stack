@@ -117,12 +117,13 @@ add_filter( 'cs_element_render_function', function ( $render, $data ) {
 }, 10, 2 );
 
 /**
- * Fields left out of the email table: anything starting with cs_ or _ (the
- * honeypot, nonces) and captcha tokens. Real fields should never be named that
- * way.
+ * Fields left out of the email table: anything starting with cs_, cs- or _
+ * (the honeypot, Cornerstone's cs-form-id, nonces) and captcha tokens. Real
+ * fields should never be named that way.
  */
 function tg_stack_form_field_hidden( $name ) {
 	$hidden = 0 === strpos( $name, 'cs_' )
+		|| 0 === strpos( $name, 'cs-' )
 		|| 0 === strpos( $name, '_' )
 		|| in_array( $name, [ 'cf-turnstile-response', 'g-recaptcha-response', 'h-captcha-response' ], true );
 
