@@ -109,12 +109,23 @@ function tg_stack_form_label( $name, $element = null ) {
 }
 
 add_filter( 'cs_element_render_function', function ( $render, $data ) {
-	if ( isset( $data['name'], $data['label_html'] ) && is_string( $data['name'] ) && '' !== $data['name'] ) {
-		tg_stack_form_label( $data['name'], $data );
+	if ( ! isset( $data['name'], $data['label_html'] ) || ! is_string( $data['name'] ) || '' === $data['name'] ) {
+		return $render;
 	}
 
-	return $render;
-}, 10, 2 );
+	tg_stack_form_label( $data['name'], $data );
+
+	// Cornerstone's "Reset On Submit" also clears inputs after a submission
+	// with errors, throwing away what the visitor typed. Keep their values in
+	// that case, so only a successful submission clears the form (like CF7).
+	return function ( $element ) use ( $render ) {
+		if ( function_exists( 'cs_form_context_get_option' ) && cs_form_context_get_option( 'reset_on_submit' ) && cs_form_context_has_errors() ) {
+			cs_form_context_set_option( 'reset_on_submit', false );
+		}
+
+		return call_user_func( $render, $element );
+	};
+}, 20, 2 );
 
 /**
  * Fields left out of the email table: anything starting with cs_, cs- or _

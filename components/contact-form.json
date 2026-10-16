@@ -39,43 +39,12 @@
         },
         {
           "_type": "layout-div",
-          "_label": "Success message",
-          "layout_div_bg_color": "#ddffde",
-          "layout_div_padding": "1rem 1rem 1rem 1rem",
-          "layout_div_border_radius": "3px",
-          "show_condition": [
-            {
-              "group": true,
-              "condition": "form:did_submit_without_errors",
-              "toggle": true,
-              "value": ""
-            }
-          ],
-          "_modules": [
-            {
-              "_type": "text",
-              "_label": "Success text",
-              "text_content": "{{dc:p:success}}",
-              "text_text_color": "#5f8632"
-            }
-          ]
-        },
-        {
-          "_type": "layout-div",
           "_label": "Fields",
           "layout_div_flexbox": true,
           "layout_div_flex_direction": "column",
           "layout_div_flex_wrap": false,
           "layout_div_flex_gap": "1.25em",
           "layout_div_flex_align": "stretch",
-          "show_condition": [
-            {
-              "group": true,
-              "condition": "form:did_submit_without_errors",
-              "toggle": false,
-              "value": ""
-            }
-          ],
           "_modules": [
             {
               "_type": "cornerstone-form-input",
@@ -256,8 +225,34 @@
               ]
             }
           ]
+        },
+        {
+          "_type": "layout-div",
+          "_label": "Success message",
+          "layout_div_bg_color": "#ddffde",
+          "layout_div_padding": "1rem 1rem 1rem 1rem",
+          "layout_div_border_radius": "3px",
+          "show_condition": [
+            {
+              "group": true,
+              "condition": "form:did_submit_without_errors",
+              "toggle": true,
+              "value": ""
+            }
+          ],
+          "_modules": [
+            {
+              "_type": "text",
+              "_label": "Success text",
+              "text_content": "{{dc:p:success}}",
+              "text_text_color": "#5f8632"
+            }
+          ]
         }
-      ]
+      ],
+      "reset_on_submit": true,
+      "form_action": "#contact-form"
     }
-  ]
+  ],
+  "id": "contact-form"
 }
