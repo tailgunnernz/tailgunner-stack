@@ -22,6 +22,16 @@ Tailgunner's default stack for the Pro theme (6.9+). It replaces Pro Starter's G
   add_filter( 'tg_stack_tweak_disable_jquery_everywhere', '__return_false' );
   ```
 
+## Child theme fallback
+
+If the plugin is missing, or WordPress switches it off without its deactivation step (a manual, non-cron update deactivates plugins silently), `x_stack` still points at the Tailgunner stack and Pro renders blank pages. Pro Starter's child theme carries this guard so the site falls back to Starter instead:
+
+```php
+add_filter( 'option_x_stack', function ( $stack ) {
+  return ( 'tailgunner' === $stack && ! defined( 'TG_STACK_VERSION' ) ) ? 'starter' : $stack;
+} );
+```
+
 ## Releasing
 
 Every release auto-installs on every site, so test on Pro Starter first.
